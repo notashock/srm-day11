@@ -18,6 +18,9 @@ import com.example.day11.dto.UserCreateRequest;
 import com.example.day11.exception.ResourceNotFoundException;
 import com.example.day11.model.User;
 import com.example.day11.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -45,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateRequest request) {
         User user = service.createUser(request.getEmail(), request.getPassword());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
