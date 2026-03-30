@@ -2,8 +2,6 @@ package com.example.day11.service;
 
 import java.util.List;
 
-import javax.print.attribute.standard.PageRanges;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

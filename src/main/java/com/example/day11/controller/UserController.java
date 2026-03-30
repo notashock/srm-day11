@@ -21,8 +21,6 @@ import com.example.day11.service.UserService;
 
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
