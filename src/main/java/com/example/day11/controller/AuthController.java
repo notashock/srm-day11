@@ -1,6 +1,7 @@
 package com.example.day11.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.autoconfigure.JacksonProperties.Json;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,20 +29,22 @@ public class AuthController {
     private UserService service;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<JsonResponse<User>> register(@RequestBody UserCreateRequest request) {
         User user = service.createUser(request.getEmail(), request.getPassword());
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new JsonResponse<>(true, user, null));
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody UserLoginRequest request) {
+    public ResponseEntity<JsonResponse<String>> login(@Valid @RequestBody UserLoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
 
         User user = service.authenticate(email, password);
         if (user == null) {
-            throw new RuntimeException("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new JsonResponse<>(false, null, "Invalid credentials"));
         }
-        return jwtService.generateToken(email);
+        String token = jwtService.generateToken(email);
+        return ResponseEntity.ok(new JsonResponse<>(true, token, null));
     }
 }
