@@ -1,4 +1,4 @@
-package com.example.day11.controller;
+package com.example.day11.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

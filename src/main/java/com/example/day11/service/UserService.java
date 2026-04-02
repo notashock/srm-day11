@@ -3,6 +3,8 @@ package com.example.day11.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.day11.model.User;
@@ -44,5 +46,14 @@ public class UserService {
     public User updateUser(int id, User user) {
         user.setId(id);
         return repository.save(user);
+    }
+
+    public int countUsers() {
+        return repository.countUsers();
+    }
+
+    public List<String> getAllEmails(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAllEmails(pageable);
     }
 }
